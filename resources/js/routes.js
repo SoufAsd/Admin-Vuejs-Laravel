@@ -5,8 +5,9 @@ import Profile from './views/Profile.vue'
 import Details from './views/Profile_Page.vue'
 import Manager from './views/Manager.vue'
 import VueResource from 'vue-resource';
+import VueI18n from 'vue-i18n'
 
-
+Vue.use(VueI18n)
 Vue.use(Router,VueResource);
 
 const originalPush = VueResource.prototype.push;
