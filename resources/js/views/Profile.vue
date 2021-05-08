@@ -117,21 +117,31 @@
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="grid-password">
                     Your current password
                 </label>
-                <input type="password" v-model="password.current_password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"></div>
+                <VuePassword
+        v-model="password.current_password"
+      />
+                <input style="visibility: hidden;" :type="passwordFieldType" v-model="password.current_password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"></div>
             </div>
             <div class="w-full lg:w-4/12 px-4">
                 <div class="relative w-full mb-3">
                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="grid-password">
                         Your new password
                     </label>
-                    <input type="password" v-model="password.new_password"  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"></div>
+                    <VuePassword
+        v-model="password.new_password"
+      />
+                    <input style="visibility: hidden;" type="password" v-model="password.new_password"  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"></div>
+                    
                 </div>
                 <div class="w-full lg:w-4/12 px-4">
                     <div class="relative w-full mb-3">
                         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="grid-password">
                             Re-type your new password
                         </label>
-                        <input type="password" v-model="password.new_confirm_password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"></div>
+                        <VuePassword
+        v-model="password.new_confirm_password"
+      />
+                        <input style="visibility: hidden;" type="password" v-model="password.new_confirm_password" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"></div>
                     </div>
                     <div class="w-full lg:w-12/12 px-4">
                         <div class="relative w-full mb-3">
@@ -153,13 +163,18 @@
     </div>
 </template>
 <script>
+import VuePassword from "vue-password";
 import Form from 'vform'
 import axios from "axios";
 import { isNullOrUndefined } from 'util';
 export default {
+    components: {
+    VuePassword,
+  },
     data() {
         return {
-        
+            password: "",
+      passwordFieldType: "password",
             form: new Form({
                     id:'',
                     name : '',
@@ -171,7 +186,7 @@ export default {
         current_password: '',
         new_password: '',
         new_confirm_password: '',
-        PassField : 'password'})
+        PassField : 'password'}),
         };
     },
     watch: {
@@ -180,9 +195,9 @@ export default {
     }    
   },
     methods:{
-        visiblepass(){
-
-        },
+        switchVisibility() {
+      this.passwordFieldType = this.passwordFieldType === "password" ? "text" : "password";
+    },
         changepassword(){
             axios.put(`api/reset`,{current_password : this.password.current_password, new_password : this.password.new_password, new_confirm_password: this.password.new_confirm_password, id : this.form.id})
                     .then((response) => {
