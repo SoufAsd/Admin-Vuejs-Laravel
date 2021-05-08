@@ -5,7 +5,7 @@ import Profile from './views/Profile.vue'
 import Details from './views/Profile_Page.vue'
 import Manager from './views/Manager.vue'
 import VueResource from 'vue-resource';
-
+import i18n from './i18n'
 
 
 Vue.use(Router,VueResource);
