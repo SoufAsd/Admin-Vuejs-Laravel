@@ -5,9 +5,9 @@ import Profile from './views/Profile.vue'
 import Details from './views/Profile_Page.vue'
 import Manager from './views/Manager.vue'
 import VueResource from 'vue-resource';
-import VueI18n from 'vue-i18n'
 
-Vue.use(VueI18n)
+
+
 Vue.use(Router,VueResource);
 
 const originalPush = VueResource.prototype.push;
@@ -16,29 +16,53 @@ VueResource.prototype.push = function push(location) {
   });
 };
 
+
 const routes = [
     {
-    path: '/home',
-    component: Main
-},
-{
-    path: '/setting',
-    component: Profile,
-    name : 'setting'
-},
-{
-    path: '/details',
-    component: Details
-},
-{
-    path: '/manager',
-    component: Manager
-},
+        path: '/:lang',
+        component: {
+          render (c) { return c('router-view') }
+        },
+        children: [
+          {
+            path: '/home',
+            component: Main
+          },
+          {
+            path: '/setting',
+            component: Profile,
+            name : 'setting'
+          },
+          {
+            path: '/details',
+            component: Details
+          }
+        ]
+      }
+//     {
+//     path: '/home',
+//     component: Main
+// },
+// {
+//     path: '/setting',
+//     component: Profile,
+//     name : 'setting'
+// },
+// {
+//     path: '/details',
+//     component: Details
+// },
+// {
+//     path: '/manager',
+//     component: Manager
+// },
 ];
 
 const router = new Router ({
     mode: 'history',
+    base: process.env.BASE_URL,
     routes : routes
 });
+
 
 export default router;
