@@ -283,24 +283,19 @@ export default {
                 };
                 reader.readAsDataURL(file);
             },
-        //---------------------------USER DETAILS-------------------------------------
         getUser() {
                 axios.get("api/profile")
                 .then(({ data }) => (this.form.fill(data)));
     },
-    //-------------------------UPLOAD IMAGE API CONTROL----------------------------
     upload(){
             axios.post('/api/upload',{image: this.details.image, iduser : this.form.id}).then(response => {this.$router.go()});
     },
-    //-------------------------UPLOAD AGE API CONTROL----------------------------
     saveage(){
         axios.post('/api/saveage',{age : this.details.age,iduser : this.form.id}).then(response => {this.$router.go()});
     },
-    //-------------------------UPLOAD FIRST AND LAST NAME API CONTROL----------------------------
     savenames(){
         axios.post('/api/savenames',{first : this.details.first,last : this.details.last,iduser : this.form.id}).then(response => {this.$router.go()});
     },
-    //-------------------------UPLOAD ADRESSE API CONTROL----------------------------
     saveadresse(){
         axios.post('/api/saveadresse',{adresse : this.details.adresse,iduser : this.form.id}).then(response => {this.$router.go()});
     }

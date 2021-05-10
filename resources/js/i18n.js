@@ -1,5 +1,16 @@
+import en from './languages/en.json'
+import fr from './languages/fr.json'
+import ar from './languages/ar.json'
+import Vuei18n from 'vue-i18n'
 import Vue from 'vue'
-import VueI18n from 'vue-i18n'
 
-Vue.use(VueI18n)
+Vue.use(Vuei18n);
 
+export default new Vuei18n({
+    locale : localStorage.language || 'en',
+    messages : {
+        en : en,
+        fr : fr,
+        ar : ar
+    }
+});
